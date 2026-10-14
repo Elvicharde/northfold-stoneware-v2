@@ -13,6 +13,15 @@ const mainImage = document.querySelector("[data-main-image]");
 const imageFallback = document.querySelector(".image-fallback");
 const thumbnailsElement = document.querySelector("[data-gallery-thumbnails]");
 const descriptionMeta = document.querySelector('meta[name="description"]');
+const finishSelector = document.querySelector("[data-finish-selector]");
+const finishOptionsElement = document.querySelector("[data-finish-options]");
+const capacitySelector = document.querySelector("[data-capacity-selector]");
+const capacityOptionsElement = document.querySelector("[data-capacity-options]");
+const variantStatus = document.querySelector("[data-variant-status]");
+const addToCartButton = document.querySelector("[data-add-to-cart]");
+
+let selectedOptionValues = {};
+let currentVariant = null;
 
 const PRODUCT_QUERY = `
   query ProductByHandle($handle: String!) {
@@ -99,7 +108,10 @@ function renderGallery(product) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = "thumbnail";
-    button.setAttribute("aria-label", `Show image ${index + 1} of ${images.length}`);
+    button.setAttribute(
+      "aria-label",
+      `Show image ${index + 1}: ${imageAlt(image, productTitle, index)}`,
+    );
     button.setAttribute("aria-pressed", "false");
 
     const thumbnailImage = document.createElement("img");
@@ -119,6 +131,114 @@ function renderGallery(product) {
   selectImage(images[0], 0, productTitle, buttons);
 }
 
+function appendOptionInputs(container, option, groupName, product) {
+  container.replaceChildren();
+  const values = Array.isArray(option?.values) ? option.values : [];
+  const firstProductImage = product.images?.nodes?.find((image) => image.url);
+
+  values.forEach((value, index) => {
+    const id = `${groupName}-${index}`;
+    const label = document.createElement("label");
+    label.className = groupName === "finish" ? "finish-option" : "capacity-option";
+    label.htmlFor = id;
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = groupName;
+    input.id = id;
+    input.value = value;
+    input.checked = index === 0;
+    selectedOptionValues[option.name] = selectedOptionValues[option.name] ?? values[0];
+
+    if (groupName === "finish") {
+      const content = document.createElement("span");
+      content.className = "finish-option-content";
+      const tileImage = document.createElement("img");
+      tileImage.alt = "";
+      tileImage.loading = "lazy";
+
+      const matchingVariant = (product.variants?.nodes ?? []).find((variant) =>
+        variant.selectedOptions?.some(({ name, value: selectedValue }) =>
+          name === option.name && selectedValue === value,
+        ),
+      );
+      const variantImage = matchingVariant?.image;
+      const image = variantImage?.url && variantImage.url !== firstProductImage?.url
+        ? variantImage
+        : firstProductImage;
+
+      if (image?.url) {
+        tileImage.src = image.url;
+        tileImage.onerror = () => tileImage.remove();
+      } else {
+        tileImage.hidden = true;
+      }
+
+      const visibleValue = document.createElement("span");
+      visibleValue.textContent = value;
+      content.append(tileImage, visibleValue);
+      label.append(input, content);
+    } else {
+      label.append(input, document.createTextNode(value));
+    }
+
+    input.addEventListener("change", () => {
+      if (!input.checked) return;
+      selectedOptionValues[option.name] = input.value;
+      updateSelectedVariant(product);
+    });
+    container.append(label);
+  });
+
+  return values.length > 0;
+}
+
+function renderOptionControls(product) {
+  selectedOptionValues = {};
+  const options = product.options ?? [];
+  const finishOption = options.find((option) => option.name === "Finish");
+  const capacityOption = options.find((option) => option.name === "Capacity");
+
+  finishSelector.hidden = !appendOptionInputs(
+    finishOptionsElement,
+    finishOption,
+    "finish",
+    product,
+  );
+  capacitySelector.hidden = !appendOptionInputs(
+    capacityOptionsElement,
+    capacityOption,
+    "capacity",
+    product,
+  );
+  updateSelectedVariant(product);
+}
+
+function updateSelectedVariant(product) {
+  const optionNames = ["Finish", "Capacity"].filter((name) => selectedOptionValues[name]);
+  currentVariant = (product.variants?.nodes ?? []).find((variant) =>
+    optionNames.length === 2 && optionNames.every((name) =>
+      variant.selectedOptions?.some(({ name: variantOption, value }) =>
+        variantOption === name && value === selectedOptionValues[name],
+      ),
+    ),
+  ) ?? null;
+
+  const isAvailable = currentVariant?.availableForSale === true;
+  const price = currentVariant ? formatPrice(currentVariant.price) : "";
+  priceElement.textContent = price;
+  priceElement.hidden = !price;
+  addToCartButton.disabled = !isAvailable;
+
+  if (!currentVariant) {
+    variantStatus.textContent = "This option combination is unavailable.";
+  } else if (!isAvailable) {
+    variantStatus.textContent = "This option combination is currently unavailable.";
+  } else {
+    variantStatus.textContent = "";
+  }
+}
+
 function renderProduct(product) {
   const productTitle = product.title?.trim();
   if (!productTitle) throw new Error("The product response did not include a title.");
@@ -133,11 +253,8 @@ function renderProduct(product) {
   document.title = seoTitle;
   descriptionMeta.content = seoDescription;
 
-  const firstVariantPrice = formatPrice(product.variants?.nodes?.[0]?.price);
-  priceElement.textContent = firstVariantPrice;
-  priceElement.hidden = !firstVariantPrice;
-
   renderGallery(product);
+  renderOptionControls(product);
 }
 
 async function loadProduct() {

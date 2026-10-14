@@ -65,8 +65,17 @@
         <div class="product-info">
           <p class="eyebrow">Northfold Homeware</p>
           <h1 id="product-title" data-product-title></h1>
-          <p class="price" data-product-price aria-label="Starting price"></p>
+          <p class="price" data-product-price aria-label="Price" aria-live="polite"></p>
           <p class="description" data-product-description></p>
+          <fieldset class="finish-selector" data-finish-selector hidden>
+            <legend>Finish</legend>
+            <div class="finish-options" data-finish-options></div>
+          </fieldset>
+          <fieldset class="capacity-selector" data-capacity-selector hidden>
+            <legend>Capacity</legend>
+            <div class="capacity-options" data-capacity-options></div>
+          </fieldset>
+          <p class="variant-status" data-variant-status role="status" aria-live="polite"></p>
           <div class="product-error" data-product-error role="alert" hidden>
             <p data-error-message></p>
             <button type="button" class="retry-button" data-retry>Try again</button>
@@ -86,7 +95,7 @@
                   +
                 </button>
               </div>
-              <button class="add-to-cart" type="button">Add to Cart</button>
+              <button class="add-to-cart" data-add-to-cart type="button">Add to Cart</button>
             </div>
           </form>
           <div class="product-promise">
