@@ -123,22 +123,6 @@ button {
 .gallery {
   min-width: 0;
 }
-.gallery-group {
-  display: none;
-}
-.product:has(input[name="glaze"][value="oat"]:checked) .gallery--oat,
-.product:has(input[name="glaze"][value="slate"]:checked) .gallery--slate,
-.product:has(input[name="glaze"][value="moss"]:checked) .gallery--moss {
-  display: block;
-  animation: gallery-appear 0.18s ease-out both;
-}
-.gallery-views {
-  width: 100%;
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
 .hero-image {
   width: 100%;
   aspect-ratio: 4 / 5.08;
@@ -147,16 +131,10 @@ button {
   border-radius: 2px;
 }
 .hero-image img {
-  display: none;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-.gallery-views:has(input[value="sunlight"]:checked) .hero-image .view--sunlight,
-.gallery-views:has(input[value="front"]:checked) .hero-image .view--front,
-.gallery-views:has(input[value="interior"]:checked) .hero-image .view--interior,
-.gallery-views:has(input[value="lifestyle"]:checked) .hero-image .view--lifestyle {
-  display: block;
 }
 .thumbnail img {
   display: block;
@@ -166,7 +144,7 @@ button {
 }
 .thumbnails {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
   margin-top: 23px;
 }
@@ -187,18 +165,14 @@ button {
   cursor: pointer;
 }
 .thumbnail:hover,
-.thumbnail-option input:checked + .thumbnail {
+.thumbnail[aria-pressed="true"] {
   opacity: 1;
 }
-.thumbnail-option input:checked + .thumbnail {
+.thumbnail[aria-pressed="true"] {
   border-color: var(--ink);
 }
-.thumbnail-option input:focus-visible + .thumbnail {
-  outline: 2px solid #5c7791;
-  outline-offset: 3px;
-}
-.gallery-group:has(input:focus-visible) {
-  overflow: visible;
+.thumbnail[aria-pressed="true"] img {
+  transform: scale(1.025);
 }
 @keyframes gallery-appear {
   from { opacity: 0.82; }
@@ -308,13 +282,6 @@ h1 {
 }
 .swatch.moss {
   --swatch: var(--moss);
-}
-.swatch input:focus-visible {
-  outline: 0;
-}
-.swatch:has(input:focus-visible)::before {
-  outline: 2px solid #5c7791;
-  outline-offset: 3px;
 }
 .visually-hidden {
   position: absolute !important;
@@ -691,6 +658,72 @@ h1 {
     display: flex;
     gap: 25px;
     text-transform: uppercase;
+  }
+}
+.product-error {
+  max-width: 450px;
+  margin: 0 0 28px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  line-height: 1.5;
+}
+.product-error p {
+  margin: 0 0 12px;
+}
+.retry-button {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.image-fallback {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  place-items: center;
+  color: var(--muted);
+  text-align: center;
+}
+.image-fallback[hidden] {
+  display: none;
+}
+.product.is-loading .hero-image {
+  background: linear-gradient(100deg, #e8e3da 30%, #f4f1eb 50%, #e8e3da 70%);
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.4s ease-in-out infinite;
+}
+.product.is-loading [data-product-title]:empty::before,
+.product.is-loading [data-product-price]:empty::before,
+.product.is-loading [data-product-description]:empty::before {
+  display: block;
+  content: "";
+  border-radius: 2px;
+  background: linear-gradient(100deg, var(--line) 30%, var(--surface) 50%, var(--line) 70%);
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.4s ease-in-out infinite;
+}
+.product.is-loading [data-product-title]:empty::before {
+  width: 78%;
+  height: 1.05em;
+}
+.product.is-loading [data-product-price]:empty::before {
+  width: 82px;
+  height: 1em;
+}
+.product.is-loading [data-product-description]:empty::before {
+  width: 100%;
+  height: 4.6em;
+}
+@keyframes loading-shimmer {
+  to { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product.is-loading .hero-image,
+  .product.is-loading [data-product-title]:empty::before,
+  .product.is-loading [data-product-price]:empty::before,
+  .product.is-loading [data-product-description]:empty::before {
+    animation: none;
   }
 }
 @media (prefers-color-scheme: dark) {

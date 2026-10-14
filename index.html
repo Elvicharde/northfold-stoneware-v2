@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#faf9f6" />
-    <title>Northfold Stoneware Mug | Northfold Homeware</title>
+    <meta name="description" content="" />
+    <title>Northfold Homeware</title>
     <link rel="icon" href="favicon.ico" sizes="any" />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -45,105 +46,32 @@
       <div class="wrap breadcrumbs">
         <nav aria-label="Breadcrumb">
           <a href="#top">Home</a><span>/</span><a href="#product">Shop</a
-          ><span>/</span><span aria-current="page">Stoneware Mug</span>
+          ><span>/</span><span aria-current="page" data-product-breadcrumb></span>
         </nav>
       </div>
       <section
-        class="product wrap"
+        class="product wrap is-loading"
         id="product"
         aria-labelledby="product-title"
+        aria-busy="true"
       >
         <div class="gallery">
-          <div class="gallery-group gallery--oat">
-            <fieldset class="gallery-views">
-              <legend class="visually-hidden">Oat glaze product images</legend>
-              <div class="hero-image">
-                <img class="view--sunlight" src="assets/images/mug-oat-sunlight.png" alt="Oat glazed stoneware mug in sunlight" fetchpriority="high" />
-                <img class="view--front" src="assets/images/mug-oat-front.png" alt="Front view of the Oat glazed stoneware mug" />
-                <img class="view--interior" src="assets/images/mug-oat-interior.png" alt="Interior of the Oat glazed stoneware mug" />
-                <img class="view--lifestyle" src="assets/images/mug-oat-lifestyle.png" alt="Oat glazed stoneware mug in a morning setting" />
-              </div>
-              <div class="thumbnails">
-                <div class="thumbnail-option"><input class="visually-hidden" type="radio" name="gallery-oat" id="oat-view-sunlight" value="sunlight" checked /><label class="thumbnail" for="oat-view-sunlight"><img src="assets/images/mug-oat-sunlight.png" alt="" /><span class="visually-hidden">Oat glaze, sunlight view</span></label></div>
-                <div class="thumbnail-option"><input class="visually-hidden" type="radio" name="gallery-oat" id="oat-view-front" value="front" /><label class="thumbnail" for="oat-view-front"><img src="assets/images/mug-oat-front.png" alt="" /><span class="visually-hidden">Oat glaze, front view</span></label></div>
-                <div class="thumbnail-option"><input class="visually-hidden" type="radio" name="gallery-oat" id="oat-view-interior" value="interior" /><label class="thumbnail" for="oat-view-interior"><img src="assets/images/mug-oat-interior.png" alt="" /><span class="visually-hidden">Oat glaze, interior view</span></label></div>
-                <div class="thumbnail-option"><input class="visually-hidden" type="radio" name="gallery-oat" id="oat-view-lifestyle" value="lifestyle" /><label class="thumbnail" for="oat-view-lifestyle"><img src="assets/images/mug-oat-lifestyle.png" alt="" /><span class="visually-hidden">Oat glaze, lifestyle view</span></label></div>
-              </div>
-            </fieldset>
+          <div class="hero-image">
+            <img data-main-image alt="" fetchpriority="high" />
+            <p class="image-fallback" hidden>Product image unavailable</p>
           </div>
-          <div class="gallery-group gallery--slate">
-            <fieldset class="gallery-views">
-              <legend class="visually-hidden">Slate glaze product images</legend>
-              <div class="hero-image">
-                <img class="view--sunlight" src="assets/images/mug-slate-sunlight.png" alt="Slate glazed stoneware mug in sunlight" />
-                <img class="view--front" src="assets/images/mug-slate-front.png" alt="Front view of the Slate glazed stoneware mug" />
-                <img class="view--interior" src="assets/images/mug-slate-interior.png" alt="Interior of the Slate glazed stoneware mug" />
-                <img class="view--lifestyle" src="assets/images/mug-slate-lifestyle.png" alt="Slate glazed stoneware mug in a morning setting" />
-              </div>
-              <div class="thumbnails">
-                <div class="thumbnail-option"><input class="visually-hidden" type="radio" name="gallery-slate" id="slate-view-sunlight" value="sunlight" checked /><label class="thumbnail" for="slate-view-sunlight"><img src="assets/images/mug-slate-sunlight.png" alt="" /><span class="visually-hidden">Slate glaze, sunlight view</span></label></div>
-                <div class="thumbnail-option"><input class="visually-hidden" type="radio" name="gallery-slate" id="slate-view-front" value="front" /><label class="thumbnail" for="slate-view-front"><img src="assets/images/mug-slate-front.png" alt="" /><span class="visually-hidden">Slate glaze, front view</span></label></div>
-                <div class="thumbnail-option"><input class="visually-hidden" type="radio" name="gallery-slate" id="slate-view-interior" value="interior" /><label class="thumbnail" for="slate-view-interior"><img src="assets/images/mug-slate-interior.png" alt="" /><span class="visually-hidden">Slate glaze, interior view</span></label></div>
-                <div class="thumbnail-option"><input class="visually-hidden" type="radio" name="gallery-slate" id="slate-view-lifestyle" value="lifestyle" /><label class="thumbnail" for="slate-view-lifestyle"><img src="assets/images/mug-slate-lifestyle.png" alt="" /><span class="visually-hidden">Slate glaze, lifestyle view</span></label></div>
-              </div>
-            </fieldset>
-          </div>
-          <div class="gallery-group gallery--moss">
-            <fieldset class="gallery-views">
-              <legend class="visually-hidden">Moss glaze product images</legend>
-              <div class="hero-image">
-                <img class="view--sunlight" src="assets/images/mug-moss-sunlight.png" alt="Moss glazed stoneware mug in sunlight" />
-                <img class="view--front" src="assets/images/mug-moss-front.png" alt="Front view of the Moss glazed stoneware mug" />
-                <img class="view--interior" src="assets/images/mug-moss-interior.png" alt="Interior of the Moss glazed stoneware mug" />
-                <img class="view--lifestyle" src="assets/images/mug-moss-lifestyle.png" alt="Moss glazed stoneware mug in a morning setting" />
-              </div>
-              <div class="thumbnails">
-                <div class="thumbnail-option"><input class="visually-hidden" type="radio" name="gallery-moss" id="moss-view-sunlight" value="sunlight" checked /><label class="thumbnail" for="moss-view-sunlight"><img src="assets/images/mug-moss-sunlight.png" alt="" /><span class="visually-hidden">Moss glaze, sunlight view</span></label></div>
-                <div class="thumbnail-option"><input class="visually-hidden" type="radio" name="gallery-moss" id="moss-view-front" value="front" /><label class="thumbnail" for="moss-view-front"><img src="assets/images/mug-moss-front.png" alt="" /><span class="visually-hidden">Moss glaze, front view</span></label></div>
-                <div class="thumbnail-option"><input class="visually-hidden" type="radio" name="gallery-moss" id="moss-view-interior" value="interior" /><label class="thumbnail" for="moss-view-interior"><img src="assets/images/mug-moss-interior.png" alt="" /><span class="visually-hidden">Moss glaze, interior view</span></label></div>
-                <div class="thumbnail-option"><input class="visually-hidden" type="radio" name="gallery-moss" id="moss-view-lifestyle" value="lifestyle" /><label class="thumbnail" for="moss-view-lifestyle"><img src="assets/images/mug-moss-lifestyle.png" alt="" /><span class="visually-hidden">Moss glaze, lifestyle view</span></label></div>
-              </div>
-            </fieldset>
-          </div>
+          <div class="thumbnails" data-gallery-thumbnails role="group" aria-label="Product images"></div>
         </div>
         <div class="product-info">
           <p class="eyebrow">Northfold Homeware</p>
-          <h1 id="product-title">Northfold Stoneware Mug</h1>
-          <p class="price">$28.00</p>
-          <p class="description">
-            Hand-thrown stoneware, finished with a matte reactive glaze.
-            Designed for quiet mornings and everyday rituals — each piece
-            carries the subtle variation of its making.
-          </p>
+          <h1 id="product-title" data-product-title></h1>
+          <p class="price" data-product-price aria-label="Starting price"></p>
+          <p class="description" data-product-description></p>
+          <div class="product-error" data-product-error role="alert" hidden>
+            <p data-error-message></p>
+            <button type="button" class="retry-button" data-retry>Try again</button>
+          </div>
           <form class="purchase-form">
-            <fieldset class="glaze-selector">
-              <legend>
-                Glaze <span aria-hidden="true">—</span>
-                <span class="selected-glaze selected-glaze--oat">Oat</span>
-                <span class="selected-glaze selected-glaze--slate">Slate</span>
-                <span class="selected-glaze selected-glaze--moss">Moss</span>
-              </legend>
-              <div class="swatches">
-                <label class="swatch oat"
-                  ><input type="radio" name="glaze" value="oat" checked /><span
-                    class="visually-hidden"
-                    >Oat</span
-                  ></label
-                >
-                <label class="swatch slate"
-                  ><input type="radio" name="glaze" value="slate" /><span
-                    class="visually-hidden"
-                    >Slate</span
-                  ></label
-                >
-                <label class="swatch moss"
-                  ><input type="radio" name="glaze" value="moss" /><span
-                    class="visually-hidden"
-                    >Moss</span
-                  ></label
-                >
-              </div>
-            </fieldset>
             <div class="purchase-controls">
               <div class="quantity-control">
                 <label for="quantity">Quantity</label
@@ -176,22 +104,16 @@
                 d="M4 10h13a4 4 0 0 1 0 8H8a4 4 0 0 1-4-4v-4Zm13 2h2a2 2 0 0 1 0 4h-2M7 3c0 2 2 2 2 4M12 2c0 2 2 2 2 4"
               />
             </svg>
-            <h2>Made for Everyday Rituals</h2>
-            <p>
-              Comfortable weight and a generous handle, built to be held daily
-              without losing its shape or spirit.
-            </p>
+            <h2>For Everyday Rituals</h2>
+            <p>A familiar companion for a quiet pause and your favorite hot beverage.</p>
           </article>
           <article class="benefit">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 2C9 7 5 11 5 15a7 7 0 0 0 14 0c0-4-4-8-7-13Z" />
               <path class="icon-cutout" d="M9 15a3 3 0 0 0 3 3" />
             </svg>
-            <h2>Distinctive Natural Glazes</h2>
-            <p>
-              A reactive matte finish means no two pieces are identical — small
-              variations are part of the character.
-            </p>
+            <h2>A Finish to Suit Your Style</h2>
+            <p>Explore the finish options available for this ceramic mug.</p>
           </article>
           <article class="benefit">
             <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -199,11 +121,8 @@
                 d="M20 4c-7 0-13 2-15 8-.8 2.4.2 5 2.8 5.4C14 18 19 12 20 4ZM4 21c2-5 6-8 11-10"
               />
             </svg>
-            <h2>Timeless, Considered Design</h2>
-            <p>
-              Designed to age gracefully and stay out of trend cycles, fitting
-              quietly into any home.
-            </p>
+            <h2>Choose Your Capacity</h2>
+            <p>Small and Large options make it easy to choose the size that suits your routine.</p>
           </article>
         </div>
       </section>
@@ -241,5 +160,6 @@
         </div>
       </div>
     </footer>
+    <script type="module" src="script.js"></script>
   </body>
 </html>
