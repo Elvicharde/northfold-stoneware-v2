@@ -21,6 +21,9 @@
           class="icon-button cart-button"
           type="button"
           aria-label="Shopping cart"
+          aria-haspopup="dialog"
+          aria-controls="cart-dialog"
+          aria-expanded="false"
         >
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path
@@ -29,6 +32,7 @@
             <circle cx="9.5" cy="20" r="1" />
             <circle cx="18" cy="20" r="1" />
           </svg>
+          <span class="cart-count-badge" data-cart-count hidden></span>
         </button>
         <button
           class="icon-button menu-button"
@@ -84,14 +88,15 @@
             <div class="purchase-controls">
               <div class="quantity-control">
                 <label for="quantity">Quantity</label
-                ><button type="button" aria-label="Decrease quantity">−</button
+                ><button type="button" data-quantity-step="-1" aria-label="Decrease quantity">−</button
                 ><input
                   id="quantity"
                   name="quantity"
                   type="number"
                   min="1"
+                  step="1"
                   value="1"
-                /><button type="button" aria-label="Increase quantity">
+                /><button type="button" data-quantity-step="1" aria-label="Increase quantity">
                   +
                 </button>
               </div>
@@ -135,6 +140,21 @@
           </article>
         </div>
       </section>
+
+      <p class="visually-hidden" data-cart-live role="status" aria-live="polite"></p>
+      <dialog class="cart-dialog" id="cart-dialog" data-cart-dialog aria-labelledby="cart-title">
+        <section class="cart-drawer-panel">
+          <header class="cart-drawer-header">
+            <h2 id="cart-title">Your cart</h2>
+            <button class="cart-close" type="button" data-cart-close aria-label="Close cart">×</button>
+          </header>
+          <p class="cart-empty" data-cart-empty>Your cart is empty.</p>
+          <div class="cart-items" data-cart-items aria-label="Cart items"></div>
+          <footer class="cart-drawer-footer">
+            <div class="cart-total-row"><span>Total</span><strong data-cart-total></strong></div>
+          </footer>
+        </section>
+      </dialog>
     </main>
 
     <footer class="site-footer" id="footer">
