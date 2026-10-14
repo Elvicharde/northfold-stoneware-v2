@@ -34,6 +34,7 @@ const quantityButtons = document.querySelectorAll("[data-quantity-step]");
 let selectedOptionValues = {};
 let currentVariant = null;
 let currentProduct = null;
+let heroImageUrl = "";
 let cart = [];
 let cartOpener = null;
 let focusAfterCartClose = null;
@@ -67,7 +68,8 @@ const PRODUCT_QUERY = `
 `;
 
 function currentHandle() {
-  return new URLSearchParams(window.location.search).get("handle") || DEFAULT_HANDLE;
+  const handle = new URLSearchParams(window.location.search).get("handle")?.trim();
+  return handle || DEFAULT_HANDLE;
 }
 
 function formatPrice(price) {
@@ -90,17 +92,27 @@ function imageAlt(image, productTitle, index) {
   return providedAlt || `${productTitle} product image ${index + 1}`;
 }
 
-function selectImage(image, index, productTitle, buttons) {
+function displayHeroImage(image, alt) {
+  if (!image?.url || typeof image.url !== "string" || !image.url.trim()) return;
+
   mainImage.hidden = false;
   imageFallback.hidden = true;
-  mainImage.alt = imageAlt(image, productTitle, index);
+  mainImage.alt = alt;
+  if (heroImageUrl === image.url && mainImage.getAttribute("src") === image.url) return;
+
   mainImage.onerror = () => {
+    heroImageUrl = "";
     mainImage.removeAttribute("src");
     mainImage.hidden = true;
     imageFallback.hidden = false;
     imageFallback.textContent = "Product image unavailable";
   };
+  heroImageUrl = image.url;
   mainImage.src = image.url;
+}
+
+function selectImage(image, index, productTitle, buttons) {
+  displayHeroImage(image, imageAlt(image, productTitle, index));
 
   buttons.forEach((button, buttonIndex) => {
     button.setAttribute("aria-pressed", String(buttonIndex === index));
@@ -115,6 +127,7 @@ function renderGallery(product) {
   thumbnailsElement.replaceChildren();
 
   if (images.length === 0) {
+    heroImageUrl = "";
     mainImage.hidden = true;
     imageFallback.hidden = false;
     imageFallback.textContent = "No product images available";
@@ -242,6 +255,12 @@ function updateSelectedVariant(product) {
   ) ?? null;
 
   const isAvailable = currentVariant?.availableForSale === true;
+  if (currentVariant?.image?.url && currentProduct?.title) {
+    displayHeroImage(
+      currentVariant.image,
+      imageAlt(currentVariant.image, currentProduct.title, 0),
+    );
+  }
   const price = currentVariant ? formatPrice(currentVariant.price) : "";
   priceElement.textContent = price;
   priceElement.hidden = !price;
@@ -596,7 +615,14 @@ function renderProduct(product) {
   renderOptionControls(product);
 }
 
+function syncProductUrl(handle) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("handle", handle);
+  window.history.replaceState(window.history.state, "", url);
+}
+
 async function loadProduct() {
+  const handle = currentHandle();
   productSection.classList.add("is-loading");
   productSection.setAttribute("aria-busy", "true");
   errorElement.hidden = true;
@@ -608,7 +634,7 @@ async function loadProduct() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: PRODUCT_QUERY,
-        variables: { handle: currentHandle() },
+        variables: { handle },
       }),
     });
 
@@ -624,6 +650,7 @@ async function loadProduct() {
     }
 
     renderProduct(result.data.product);
+    syncProductUrl(handle);
     productSection.classList.remove("is-loading");
   } catch (error) {
     errorMessage.textContent = error instanceof TypeError
